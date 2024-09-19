@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project uses GitHub Actions for Continuous Integration (CI). The workflow is triggered on every push and pull request to the main branch and can also be manually excused.
+This project uses GitHub Actions for Continuous Integration (CI). The workflow is triggered on every push and pull request to the main branch and can also be executed manually.
 
 ## Key Features
  - **Automated Testing**: The project uses Maven and TestNG for dependency management and test execution.
