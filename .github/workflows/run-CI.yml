@@ -57,7 +57,7 @@ jobs:
 
         #post report
         #Hi
-      - name: Deploy report to Github Pages
+      - name: Deploy report to Github Pagess
         if: always()
         uses: crazy-max/ghaction-github-pages@v4
         with:
