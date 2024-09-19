@@ -30,10 +30,8 @@ jobs:
 
 
       #Dependencies and run test
-      - name: Build with maven
-        run: mvn clean
-      - name: Run tests
-        run: mvn -DbrowserName=${{ inputs.browserName || 'CHROME' }} verify
+      - name: Build and Run Tests with Maven
+        run: mvn clean -DskipTests && mvn -DbrowserName=${{ inputs.browserName || 'CHROME' }} verify
 
         #Allure Get history
       - name: Get Allure history
