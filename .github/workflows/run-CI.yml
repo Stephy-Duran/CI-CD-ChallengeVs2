@@ -1,0 +1,84 @@
+name: Continuous-Integration
+
+
+on:
+  push:
+    branches:
+      - 'Fix_branch'
+  pull_request:
+    branches:
+      - 'Fix_branch'
+  #Execute a workflow manually
+  workflow_dispatch:
+    inputs:
+      browserName:
+        description: 'Browser type'
+        required: false
+        type: string
+        default: 'CHROME'
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+
+      #Dependencies and run test
+      - name: Build with maven
+        run: mvn clean
+      - name: Run tests
+        run: mvn -DbrowserName=${{ inputs.browserName || 'CHROME' }} verify
+
+        #Allure Get history
+      - name: Get Allure history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages-storage1
+          path: gh-pages-storage1
+
+        #Generate report
+      - name: Allure report action
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+          allure_results: allure-results
+          gh_pages: gh-pages-storage1
+          allure_report: allure-report
+          allure_history: allure-history
+
+        #post report
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: gh-pages-storage1
+          build_dir: allure-history
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
