@@ -4,10 +4,10 @@ name: Continuous-Integration
 on:
   push:
     branches:
-      - 'Fix_branch'
+      - 'main'
   pull_request:
     branches:
-      - 'Fix_branch'
+      - 'main'
   #Execute a workflow manually
   workflow_dispatch:
     inputs:
